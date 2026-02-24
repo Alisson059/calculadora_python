@@ -21,8 +21,6 @@ def subtrair(a, b):
 def multiplicar(a, b):
     return a * b
 def dividir(a, b):
-    if b == 0:
-        return "Erro! Divisão por zero." # Exibe erro (mas retorna None)
     return a / b
 
 
@@ -37,37 +35,55 @@ while True:
 
     if sair.lower() == "calcular":# Se digitar "calcular", começa a operação
 
-        # Entrada do primeiro número
-        numero1 = float(input("Digite um numero: "))
+        try:
+            # Bloco onde o programa tenta executar as operações
+            # Caso ocorra algum erro, ele será tratado nos except abaixo.
 
-        # Entrada do operador matemático
-        operador = input("Operador [+, -, *, /]: ")
+            # Entrada do primeiro número
+            numero1 = float(input("Digite um numero: "))
 
-        # Entrada do segundo número
-        numero2 = float(input("Digite um numero: "))
+            # Entrada do operador matemático
+            while True:
+                operador = input("Operador [+, -, *, /]: ")
 
-        # Verifica qual operação foi escolhida
-        if operador == "+":
-            resultado = somar(numero1, numero2) # Chama função de soma
-            print(f"{numero1} + {numero2} = {resultado}") # Mostra o resultado
+                if operador in ["+", "-", "*", "/"]:
+                    break  # sai do loop do operador
+                else:
+                    print("Operador inválido! Escolha um operador valido.")
 
-        elif operador == "-":
-            resultado = subtrair(numero1, numero2) # Chama função de subtração
-            print(f" {numero1} - {numero2} = {resultado}")
+            # Entrada do segundo número
+            numero2 = float(input("Digite um numero: "))
 
-        elif operador == "*":
-            resultado = multiplicar(numero1, numero2) # Chama função de multiplicação
-            print(f" {numero1} * {numero2} = {resultado}")
+            # Verifica qual operação foi escolhida
+            if operador == "+":
+                resultado = somar(numero1, numero2) # Chama função de soma
+                print(f"{numero1} + {numero2} = {resultado}") # Mostra o resultado
 
-        elif operador == "/":
-            if numero2 == 0: # Verifica divisão por zero
-                print("Erro: divisão por zero!") # Mostra erro
-            else:
-                resultado = dividir(numero1, numero2) # Chama função de divisão
-                print(f"{numero1} / {numero2} = {resultado}")
+            elif operador == "-":
+                resultado = subtrair(numero1, numero2) # Chama função de subtração
+                print(f" {numero1} - {numero2} = {resultado}")
 
-        else:
-            print("Operador inválido!") # Caso o usuário digite algo errado
+            elif operador == "*":
+                resultado = multiplicar(numero1, numero2) # Chama função de multiplicação
+                print(f" {numero1} * {numero2} = {resultado}")
+
+            elif operador == "/":
+                    resultado = dividir(numero1, numero2) # Chama função de divisão
+                    print(f"{numero1} / {numero2} = {resultado}")
+
+
+        except ValueError:
+            # Entrada inválida (não é número)
+            print("Erro: você deve digitar um numero!")
+
+        except ZeroDivisionError:
+            # Tentativa de dividir por zero
+            print("Erro: divisao por zero!")
+
+        except Exception as erro:
+            # Qualquer outro erro inesperado
+            print(f"ocorreu um erro insperado: {erro}")
+
 
     elif sair.lower() == "sair": # Se digitar "sair", o programa é encerrado
         print(sair.lower())
